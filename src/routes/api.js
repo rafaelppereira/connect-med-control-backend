@@ -15,7 +15,6 @@ router.use(function(req, res, next) {
   next();
 });
 
-
 // Image Upload 
 router.post('/upload', upload.single('image'), (req, res, next) => {
   try {
