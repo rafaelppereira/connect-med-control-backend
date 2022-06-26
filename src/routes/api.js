@@ -18,7 +18,7 @@ router.post('/upload', upload.single('image'), (req, res, next) => {
   try {
     require('dotenv').config();
     const image = req.file;
-    imgbbUploader(process.env.UPLOAD_API, image.path)
+    imgbbUploader('d40daf77340d0af6d9172a93db15f1ef', image.path)
       .then(() => {
         res.json({ message: 'Upload feito com sucesso!' })
       }).catch((err) => {
