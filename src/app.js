@@ -8,10 +8,20 @@ const port = process.env.PORT || 8080;
 
 dotenv.config();
 const app = express();
-app.use(cors({
-  origin: "*",
-  optionsSuccessStatus: 200
-})); //cors
+
+app.all('*', function(req, res, next) {
+  var origin = req.get('origin'); 
+  res.header('Access-Control-Allow-Origin', origin);
+  res.header("Access-Control-Allow-Headers", "X-Requested-With");
+  res.header('Access-Control-Allow-Headers', 'Content-Type');
+  next();
+});
+
+
+// app.use(cors({
+//   origin: "*",
+//   optionsSuccessStatus: 200
+// })); 
 
 app.use(express.urlencoded({ extended: true }));
 app.use('/api', apiRoutes);
