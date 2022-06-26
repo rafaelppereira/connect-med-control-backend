@@ -2,21 +2,22 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('sequelize');
 const database = require('../instances/database');
 
-const Images = database.define('Image', {
+const User = database.define('User', {
   id: {
     primaryKey: true,
     autoIncrement: true,
     type: DataTypes.INTEGER,
   },
-  name: {
-    type: DataTypes.STRING
+  email: {
+    type: DataTypes.STRING,
+    unique: true
   },
-  url: {
+  password: {
     type: DataTypes.STRING,
   }
 }, {
-  tableName: 'images',
+  tableName: 'users',
   timestamps: false,
 });
 
-module.exports = Images; 
+module.exports = User; 
