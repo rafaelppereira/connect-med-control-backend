@@ -27,7 +27,8 @@ router.post('/upload', upload.single('image'), (req, res, next) => {
         let newImage = await Images.create({
           name: image.originalname,
           url: response.url
-        })
+        });
+        console.log(response.url);
         res.json({ id: newImage.id });
       }).catch((err) => {
         console.log(err);
