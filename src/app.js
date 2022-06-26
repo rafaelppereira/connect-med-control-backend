@@ -4,6 +4,8 @@ const cors = require('cors');
 
 const apiRoutes = require('./routes/api');
 
+const port = process.env.PORT || 8080;
+
 dotenv.config();
 const app = express();
   
@@ -17,4 +19,4 @@ app.use((req, res) => {
   res.json({ error: 'Endpoint not found' });
 });
 
-app.listen(8080, () => console.log('Server running on port ' + 8080));
+app.listen(port, () => console.log('Server running'));
