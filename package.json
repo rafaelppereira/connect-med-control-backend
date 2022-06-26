@@ -1,0 +1,20 @@
+{
+  "name": "cmc-backend",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon -e json src/app.js"
+  },
+  "author": "Connect Med Control",
+  "license": "ISC",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "dotenv": "^16.0.1",
+    "express": "^4.18.1",
+    "imgbb-uploader": "^1.5.0",
+    "multer": "^1.4.5-lts.1",
+    "nodemon": "^2.0.18"
+  }
+}
