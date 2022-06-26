@@ -10,7 +10,11 @@ const Auth = {
       const [authType, token] = req.headers.authorization.split(' ');
       if (authType === 'Bearer') {
         try {
-          JWT.verify(token, process.env.JWT_SECRET_KEY);
+          JWT.verify(
+            token, 
+            process.env.JWT_SECRET_KEY
+          );
+
           success = true;
         } catch(err) {}
       }

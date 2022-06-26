@@ -14,6 +14,15 @@ const User = database.define('User', {
   },
   password: {
     type: DataTypes.STRING,
+  },
+  name: {
+    type: DataTypes.STRING,
+  },
+  role: {
+    type: DataTypes.STRING,
+  },
+  avatarurl: {
+    type: DataTypes.STRING,
   }
 }, {
   tableName: 'users',

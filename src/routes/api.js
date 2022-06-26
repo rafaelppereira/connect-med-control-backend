@@ -37,6 +37,29 @@ router.post('/upload', upload.single('image'), (req, res, next) => {
   }
 });
 
+router.post('/register', async (req, res) => {
+  let { email, password, name, role, avatarurl } = req.body;
+  let hasUser = await User.findOne({ where: {email} });
+
+  console.log(hasUser);
+
+  if (!hasUser) {
+    let newUser = await User.create({ 
+      email, 
+      password, 
+      name, 
+      role, 
+      avatarurl 
+    });
+      
+    res.json({ id: newUser.id });
+  } else {
+    res.json({ error: 'E-mail já existe' });
+  }
+
+  // res.json({ error: 'E-mail e/ou senha não cadastrados' });
+})
+
 // SignIn Method
 router.post('/login', async (req, res) => {
   if (req.body.email && req.body.password) {
@@ -49,7 +72,12 @@ router.post('/login', async (req, res) => {
 
     if (user) {
       const token = JWT.sign(
-        { id: user.id, email: user.email },
+        { id: user.id, 
+          email: user.email, 
+          name: user.name, 
+          role: user.role, 
+          avatarurl: user.avatarurl
+        },
         process.env.JWT_SECRET_KEY,
         { expiresIn: '1h' }
       );
@@ -62,8 +90,22 @@ router.post('/login', async (req, res) => {
   res.json({ status: false });
 });
 
-router.get('/ping', Auth.private, (req, res) => {
-  res.json({ pong: true });
+router.get('/user', (req, res) => {
+  if (req.headers.authorization) {
+    const [authType, token] = req.headers.authorization.split(' ');
+    if (authType === 'Bearer') {
+      try {
+        const decoded = JWT.verify(
+          token, 
+          process.env.JWT_SECRET_KEY
+        );
+
+        res.json({ user: decoded });
+      } catch(err) {}
+    }
+  } else {
+    res.json({ error: 'User not find' });
+  }
 });
 
 // Get all Images
@@ -71,5 +113,10 @@ router.get('/images', async (req, res) => {
   const list = await Images.findAll();
   res.json({ list });
 });
+
+// router.get('/ping', Auth.private, (req, res) => {
+//   res.json({ pong: true });
+// });
+
 
 module.exports = router;
