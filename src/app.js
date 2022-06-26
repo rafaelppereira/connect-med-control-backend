@@ -10,7 +10,7 @@ dotenv.config();
 const app = express();
   
 app.use(cors({
-  origin: 'https://connect-med-control.vercel.app/',
+  origin: 'https://www.connect-med-control.vercel.app/',
   optionsSuccessStatus: 200
 }));
 
