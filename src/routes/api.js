@@ -2,6 +2,8 @@ const express = require('express');
 const router = express.Router();
 const imgbbUploader = require('imgbb-uploader');
 
+const Images = require('../models/Image');
+
 const multer = require('multer');
 const upload = multer({ dest: 'uploads/' });
 
@@ -19,8 +21,12 @@ router.post('/upload', upload.single('image'), (req, res, next) => {
     require('dotenv').config();
     const image = req.file;
     imgbbUploader('d40daf77340d0af6d9172a93db15f1ef', image.path)
-      .then(() => {
-        res.json({ message: 'Upload feito com sucesso!' })
+      .then(async (response) => {
+        let newImage = await Images.create({
+          name: image.originalname,
+          url: response.url
+        })
+        res.json({ id: newImage.id });
       }).catch((err) => {
         console.log(err);
       })
