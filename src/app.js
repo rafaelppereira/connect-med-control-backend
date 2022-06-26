@@ -9,7 +9,8 @@ const port = process.env.PORT || 8080;
 dotenv.config();
 const app = express();
 app.use(cors({
-  origin: '*'
+  origin: "*",
+  optionsSuccessStatus: 200
 })); //cors
 
 app.use(express.urlencoded({ extended: true }));
