@@ -1,7 +1,6 @@
 const express = require('express');
 const router = express.Router();
 const imgbbUploader = require('imgbb-uploader');
-const JWT = require('jsonwebtoken');
 const dotenv = require('dotenv');
 dotenv.config();
 
@@ -38,58 +37,58 @@ router.post('/upload', upload.single('image'), (req, res, next) => {
   }
 });
 
-router.post('/register', async (req, res) => {
-  let { email, password, name, role, avatarurl } = req.body;
-  let hasUser = await User.findOne({ where: {email} });
+// router.post('/register', async (req, res) => {
+//   let { email, password, name, role, avatarurl } = req.body;
+//   let hasUser = await User.findOne({ where: {email} });
 
-  console.log(hasUser);
+//   console.log(hasUser);
 
-  if (!hasUser) {
-    let newUser = await User.create({ 
-      email, 
-      password, 
-      name, 
-      role, 
-      avatarurl 
-    });
+//   if (!hasUser) {
+//     let newUser = await User.create({ 
+//       email, 
+//       password, 
+//       name, 
+//       role, 
+//       avatarurl 
+//     });
       
-    res.json({ id: newUser.id });
-  } else {
-    res.json({ error: 'E-mail já existe' });
-  }
+//     res.json({ id: newUser.id });
+//   } else {
+//     res.json({ error: 'E-mail já existe' });
+//   }
 
-  // res.json({ error: 'E-mail e/ou senha não cadastrados' });
-})
+//   // res.json({ error: 'E-mail e/ou senha não cadastrados' });
+// })
 
 // SignIn Method
-router.post('/login', async (req, res) => {
-  if (req.body.email && req.body.password) {
-    let email = req.body.email;
-    let password = req.body.password;
+// router.post('/login', async (req, res) => {
+//   if (req.body.email && req.body.password) {
+//     let email = req.body.email;
+//     let password = req.body.password;
 
-    let user = await User.findOne({
-      where: { email, password }
-    });
+//     let user = await User.findOne({
+//       where: { email, password }
+//     });
 
-    if (user) {
-      const token = JWT.sign(
-        { id: user.id, 
-          email: user.email, 
-          name: user.name, 
-          role: user.role, 
-          avatarurl: user.avatarurl
-        },
-        process.env.JWT_SECRET_KEY,
-        { expiresIn: '1h' }
-      );
+//     if (user) {
+//       const token = JWT.sign(
+//         { id: user.id, 
+//           email: user.email, 
+//           name: user.name, 
+//           role: user.role, 
+//           avatarurl: user.avatarurl
+//         },
+//         process.env.JWT_SECRET_KEY,
+//         { expiresIn: '1h' }
+//       );
 
-      res.json({ status: true, token });
-      return;
-    }
-  }
+//       res.json({ status: true, token });
+//       return;
+//     }
+//   }
 
-  res.json({ status: false });
-});
+//   res.json({ status: false });
+// });
 
 router.get('/user', (req, res) => {
   if (req.headers.authorization) {
